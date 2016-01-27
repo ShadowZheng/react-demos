@@ -5,25 +5,7 @@
 </head>
 <body>
 	<div id="app"></div>
-	<script type="text/jsx">
-		var MessageBox = React.createClass({
-			alertMe: function(text) {
-				alert(text);
-			},
-			render: function() {
-				return (<h1 onClick={this.alertMe}>你好，世界！</h1>)
-			}
-		});
-
-		React.render(<MessageBox />, 
-			document.getElementById('app'),
-			function(){
-				console.log('渲染完成后的回调函数');
-			}
-		)
-	</script>
-
-	<script src="../bower_components/react/react.min.js"></script>
-	<script src="../bower_components/react/JSXTransformer.js"></script>
+	
+	<script src="bundle.js"></script>	
 </body>
 </html>
