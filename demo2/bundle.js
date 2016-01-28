@@ -66,128 +66,28 @@
 
 	__webpack_require__(161);
 
-	var CommentForm = _react2.default.createClass({
-		displayName: 'CommentForm',
+	var LinkButton = _react2.default.createClass({
+		displayName: 'LinkButton',
 
-		handleSubmit: function handleSubmit(e) {
-			e.preventDefault();
-			var author = this.refs.author.value.trim();
-			var text = this.refs.text.value.trim();
-			if (!text || !author) {
-				return;
-			}
-			this.props.onCommentSubmit({ author: author, text: text });
-			this.refs.author.value = '';
-			this.refs.text.value = '';
-			return;
-		},
-		render: function render() {
-			return _react2.default.createElement(
-				'form',
-				{ className: 'commentForm', onSubmit: this.handleSubmit },
-				_react2.default.createElement('input', { type: 'text', placeholder: 'Your Name', ref: 'author' }),
-				_react2.default.createElement('input', { type: 'text', placeholder: 'Say something...', ref: 'text' }),
-				_react2.default.createElement('input', { type: 'submit', value: 'Post' })
-			);
-		}
-	});
-
-	var Comment = _react2.default.createClass({
-		displayName: 'Comment',
-
-		rawMarkup: function rawMarkup() {
-			var rawMarkup = (0, _marked2.default)(this.props.children.toString(), { sanitize: true });
-			return { __html: rawMarkup };
-		},
-		render: function render() {
-			return _react2.default.createElement(
-				'div',
-				{ className: 'comment' },
-				_react2.default.createElement(
-					'h2',
-					{ className: 'commentAuthor' },
-					this.props.author
-				),
-				_react2.default.createElement('span', { dangerouslySetInnerHTML: this.rawMarkup() })
-			);
-		}
-	});
-
-	var CommentList = _react2.default.createClass({
-		displayName: 'CommentList',
-
-		render: function render() {
-			var commentNodes = this.props.data.map(function (comment) {
-				return _react2.default.createElement(
-					Comment,
-					{ author: comment.author, key: comment.id },
-					comment.text
-				);
-			});
-			return _react2.default.createElement(
-				'div',
-				{ className: 'commentList' },
-				commentNodes
-			);
-		}
-	});
-
-	var CommentBox = _react2.default.createClass({
-		displayName: 'CommentBox',
-
-		loadComments: function loadComments() {
-			_jquery2.default.ajax({
-				url: this.props.url,
-				dataType: 'json',
-				cache: false,
-				success: function (data) {
-					this.setState({ data: data });
-				}.bind(this),
-				error: function (xhr, status, err) {
-					console.error(this.props.url, status, err.toString());
-				}.bind(this)
-			});
-		},
-		handleCommentSubmit: function handleCommentSubmit(comment) {
-			var comments = this.state.data;
-			var newComments = comments.concat([comment]);
-			this.setState({ data: newComments });
-			_jquery2.default.ajax({
-				url: this.props.url,
-				dataType: 'json',
-				type: 'POST',
-				data: comment,
-				success: function (data) {
-					this.setState({ data: data });
-				}.bind(this),
-				error: function (xhr, status, err) {
-					console.error(this.props.url, status, err.toString());
-				}.bind(this)
-			});
-		},
 		getInitialState: function getInitialState() {
-			return { data: [] };
+			return { liked: false };
 		},
-		componentDidMount: function componentDidMount() {
-			this.loadComments();
-			//setInterval(this.loadComments, this.props.pollInterval);
+		handleClick: function handleClick() {
+			this.setState({ liked: !this.state.liked });
 		},
 		render: function render() {
+			var text = this.state.liked ? 'like' : 'haven\'t liked';
 			return _react2.default.createElement(
-				'div',
-				{ className: 'commentBox' },
-				_react2.default.createElement(
-					'h1',
-					null,
-					'Comments'
-				),
-				_react2.default.createElement(CommentList, { data: this.state.data }),
-				_react2.default.createElement(CommentForm, { onCommentSubmit: this.handleCommentSubmit })
+				'p',
+				{ onClick: this.handleClick },
+				'You ',
+				text,
+				' this, Click to toggle.'
 			);
 		}
 	});
 
-	_reactDom2.default.render(_react2.default.createElement(CommentBox, { url: '/api/comments', pollInterval: 2000 }), document.getElementById('app'));
+	_reactDom2.default.render(_react2.default.createElement(LinkButton, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */

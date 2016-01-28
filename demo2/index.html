@@ -1,50 +1,11 @@
 <html>
 <head>
-	<title>组件嵌套</title>
+	<title>Hello World</title>
 	<meta chartset="utf-8">
 </head>
 <body>
 	<div id="app"></div>
-	<script type="text/jsx">
-		var MessageBox = React.createClass({
-			render: function() {
-				return (
-					<div>
-						<h1>你好，世界！</h1>
-						<SubMessage />
-					</div>
-				)
-			}
-		});
-
-		var SubMessage = React.createClass({
-			render: function() {
-				return (
-					<div>
-						<h2>这个是子组件的内容</h2>
-						<Footer />
-					</div>
-				)
-			}
-		});
-
-		var Footer = React.createClass({
-			render: function() {
-				return (
-					<p>页脚的内容</p>
-				)
-			}
-		});
-
-		React.render(<MessageBox />, 
-			document.getElementById('app'),
-			function(){
-				console.log('渲染完成后的回调函数');
-			}
-		)
-	</script>
-
-	<script src="../bower_components/react/react.min.js"></script>
-	<script src="../bower_components/react/JSXTransformer.js"></script>
+	
+	<script src="bundle.js"></script>
 </body>
 </html>
