@@ -9,7 +9,8 @@ import TodoStore from '../stores/TodoStore';
 
 function getTodoState() {
     return {
-        allTodos: TodoStore.getAll()
+        allTodos: TodoStore.getAll(),
+        areAllComplete: TodoStore.areAllComplete()
     }
 }
 
@@ -21,20 +22,19 @@ class TodoApp extends React.Component {
         this.state = getTodoState();
     }
     componentDidMount() {
-        TodoStore.addChangeListener(this._onChange);
+        TodoStore.addChangeListener(this._onChange.bind(this));
     }
     componentWillUnmount() {
-        TodoStore.removeChangeListener(this._onChange);
+        TodoStore.removeChangeListener(this._onChange.bind(this));
     }
     _onChange() {
-        console.log('ddddd');
         this.setState(getTodoState());
     }
     render() {
         return (
           <div>
               <TodoHeader />
-              <TodoList allTodos={this.state.allTodos} />
+              <TodoList allTodos={this.state.allTodos} areAllComplete={this.state.areAllComplete} />
               <TodoFooter allTodos={this.state.allTodos} />
           </div>
         );

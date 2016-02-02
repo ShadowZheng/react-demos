@@ -7,14 +7,15 @@ import TodoActions from '../actions/TodoActions';
 const ENTER_KEY_CODE = 13;
 
 class TodoTextInput extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            value: ''
+            value: this.props.value || ''
         }
     }
+
     _save() {
-        TodoActions.createItem(this.state.value);
+        this.props.onSave(this.state.value);
         this.setState({value: ''});
     }
     _onChange(event) {
@@ -34,6 +35,7 @@ class TodoTextInput extends React.Component {
                    onChange={this._onChange.bind(this)}
                    onKeyDown={this._onKeyDown.bind(this)}
                    value={this.state.value}
+                   autoFocus={true}
             />
         );
     }
