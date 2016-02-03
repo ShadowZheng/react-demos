@@ -49,16 +49,27 @@ function toggleCompleteAll(complete) {
     });
 }
 
+function clearCompleteItem() {
+    let todos = _todos;
+    _.remove(todos, function(todo) {
+        return todo.complete;
+    });
+    _todos = todos;
+}
+
 class TodoStore extends EventEmitter{
     getAll() {
         return _todos;
     }
     areAllComplete() {
-        _todos.forEach((item) => {
-            if (!item.complete) {
+        if (_todos.length == 0) {
+            return false;
+        }
+        for (let i = 0; i < _todos.length; i++) {
+            if (!_todos[i].complete) {
                 return false;
             }
-        });
+        }
         return true;
     }
     addChangeListener(callback) {
@@ -96,6 +107,10 @@ AppDispatcher.register((action) => {
             break;
         case TodoConstants.TODO_TOGGLE_COMPLETE_ALL:
             toggleCompleteAll(action.complete);
+            todoStore.emitChange();
+            break;
+        case TodoConstants.TODO_DESTROY_COMPLETED:
+            clearCompleteItem();
             todoStore.emitChange();
             break;
         default:

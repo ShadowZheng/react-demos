@@ -7,7 +7,6 @@ import TodoActions from '../actions/TodoActions';
 
 class TodoList extends React.Component {
     _onToggleCompleteAll() {
-        console.log(this.props.areAllComplete);
         TodoActions.toggleCompleteAll(this.props.areAllComplete);
     }
     render() {

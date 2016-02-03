@@ -37,6 +37,11 @@ class TodoActions {
             complete: areAllComplete
         });
     }
+    clearCompleteItem() {
+        AppDispatcher.dispatch({
+            actionType: TodoConstants.TODO_DESTROY_COMPLETED
+        });
+    }
 }
 
 export default new TodoActions();
